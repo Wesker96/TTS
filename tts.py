@@ -8,12 +8,6 @@ class schematicBlock:
     widthMainBlock = 0
     heightMainBlock = 0
 
-    numberInput = 0
-    numberOutput = 0
-
-    maxLengthNameInput = 0
-    maxLengthNameOutput = 0
-
     listInput = []
     listOutput = []
 
@@ -58,7 +52,7 @@ class schematicBlock:
                             elif(param[0] == 'y'):
                                 self.paddingMainBlockY = param[1]
                     elif(child1.tag == 'text'):
-                        self.nameBlock = child1.text()
+                        self.nameBlock = child1.text
 
     def getParameterPins(self, root):
         for child0 in root:
@@ -80,10 +74,26 @@ class schematicBlock:
                 else:
                     self.listOutput.append(nameIO)
 
+    def createBlock(self):
+        self.nameBlock = 'NewBlock'
+        self.paddingMainBlockX = 32
+        self.paddingMainBlockY = 32
+        self.paddingPins = 50
+        self.widthBusRect = 64
+        self.heightBusRect = 24
+        self.lengthPin = 32
 
+    def addPin(self, name, polarity, dimension):
+        if(polarity == "input"):
+            if(dimension > 1):
+                self.listInput.append(name + "({0}:0)".format(dimension - 1))
+            else:
+                self.listInput.append(name)
+        elif(polarity == "output"):
+            if(dimension > 1):
+                self.listOutput.append(name + "({0}:0)".format(dimension - 1))
+            else:
+                self.listOutput.append(name)
 
-
-
-sch = schematicBlock('XADC_IPC.sym')
-print(sch.listInput)
-print(sch.nameBlock)
+class transformBlock:
+    
